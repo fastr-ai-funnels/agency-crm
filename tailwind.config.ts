@@ -11,8 +11,8 @@ const config: Config = {
       colors: {
         charcoal: "#101014",
         slate: "#1C1F26",
-        accent: "#FF7A18",
-        accentMuted: "#FFE3D0",
+        accent: "#FFD23F",
+        accentMuted: "#FFF3B0",
       },
     },
   },

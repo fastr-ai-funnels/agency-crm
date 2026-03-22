@@ -1,13 +1,18 @@
-import { MetricCard } from "@/components/MetricCard";
-import { ClientTable } from "@/components/ClientTable";
-import { WorkBoard } from "@/components/WorkBoard";
-import { prisma } from "@/lib/prisma";
-
 export const dynamic = "force-dynamic";
 
+import { prisma } from "@/lib/prisma";
+import { FinancialSummary } from "@/components/FinancialSummary";
+import { DashboardTabs } from "@/components/DashboardTabs";
+import { WorkBoard } from "@/components/WorkBoard";
+
 export default async function Page() {
-  const [clients, projects, tasks] = await Promise.all([
-    prisma.client.findMany({ orderBy: { createdAt: "desc" } }),
+  const [clients, projects, tasks, expenses, leads, revenues] = await Promise.all([
+    prisma.client.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        deliverableGroups: { include: { deliverables: true } },
+      },
+    }),
     prisma.project.findMany({
       orderBy: { createdAt: "desc" },
       include: { client: true, tasks: true },
@@ -16,30 +21,15 @@ export default async function Page() {
       orderBy: { createdAt: "desc" },
       include: { project: { include: { client: true } } },
     }),
+    prisma.expense.findMany({ orderBy: { month: "desc" } }),
+    prisma.lead.findMany({ orderBy: { createdAt: "desc" } }),
+    prisma.monthlyRevenue.findMany({ orderBy: { month: "desc" } }),
   ]);
 
-  const totalRetainer = clients.reduce(
-    (sum, client) => sum + (client.monthlyRetainer ?? 0),
-    0
-  );
-  const activeClients = clients.filter((c) => c.stage === "ACTIVE").length;
-
   return (
-    <main className="space-y-8">
-      <section className="grid gap-4 md:grid-cols-2">
-        <MetricCard
-          label="Monthly Retainer"
-          value={`$${totalRetainer.toLocaleString()}`}
-          sublabel="Across all clients"
-        />
-        <MetricCard
-          label="Active Clients"
-          value={activeClients}
-          sublabel={`${clients.length} total`}
-        />
-      </section>
-
-      <ClientTable clients={clients} />
+    <main className="space-y-8 pt-6">
+      <FinancialSummary expenses={expenses} revenues={revenues} />
+      <DashboardTabs clients={clients} leads={leads} />
       <WorkBoard tasks={tasks} projects={projects} clients={clients} />
     </main>
   );

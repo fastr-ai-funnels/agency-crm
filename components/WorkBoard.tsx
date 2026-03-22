@@ -24,7 +24,6 @@ type WorkBoardProps = {
 const taskStatusCols: { key: string; label: string }[] = [
   { key: "NOT_STARTED", label: "Not Started" },
   { key: "ACTIVE", label: "Active" },
-  { key: "BLOCKED", label: "Blocked" },
   { key: "DONE", label: "Done" },
 ];
 
@@ -205,6 +204,7 @@ export function WorkBoard({ tasks, projects, clients }: WorkBoardProps) {
             placeholder="Notes"
             className="input col-span-2 md:col-span-5"
           />
+          <input name="link" placeholder="Link (optional)" className="input" />
           <button
             type="submit"
             disabled={isPending}
@@ -216,9 +216,9 @@ export function WorkBoard({ tasks, projects, clients }: WorkBoardProps) {
       </div>
 
       {/* Kanban */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         {taskStatusCols.map(({ key, label }) => {
-          const colTasks = tasks.filter((t) => t.status === key);
+          const colTasks = tasks.filter((task) => task.status === key || (key === "NOT_STARTED" && task.status === "BLOCKED"));
           return (
             <div key={key} className="rounded-2xl border border-white/5 bg-black/30 p-3">
               <div className="flex items-center justify-between mb-3">
@@ -309,6 +309,12 @@ export function WorkBoard({ tasks, projects, clients }: WorkBoardProps) {
                 placeholder="Notes"
                 className="input col-span-2"
               />
+              <input
+                name="link"
+                defaultValue={editingTask.link ?? ""}
+                placeholder="Link (optional)"
+                className="input w-full col-span-2"
+              />
               <div className="col-span-2 flex justify-end gap-3 mt-2">
                 <button
                   type="button"
@@ -376,6 +382,11 @@ function TaskCard({
       )}
       {task.notes && (
         <p className="text-xs text-white/50 mt-1 line-clamp-2">{task.notes}</p>
+      )}
+      {task.link && (
+        <a href={task.link} target="_blank" rel="noreferrer" className="text-xs text-accent hover:underline inline-flex items-center gap-1 mt-1">
+          Link ↗
+        </a>
       )}
       <div className="mt-3 flex items-center gap-1.5">
         <select
