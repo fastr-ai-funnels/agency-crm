@@ -218,7 +218,7 @@ export function WorkBoard({ tasks, projects, clients }: WorkBoardProps) {
       {/* Kanban */}
       <div className="grid gap-4 md:grid-cols-3">
         {taskStatusCols.map(({ key, label }) => {
-          const colTasks = tasks.filter((task) => task.status === key || (key === "NOT_STARTED" && task.status === "BLOCKED"));
+          const colTasks = tasks.filter((task) => task.status === key);
           return (
             <div key={key} className="rounded-2xl border border-white/5 bg-black/30 p-3">
               <div className="flex items-center justify-between mb-3">
