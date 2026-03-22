@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
@@ -18,9 +19,7 @@ export function TopNav() {
       <div className="mx-auto max-w-6xl px-4 flex items-center justify-between h-14">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-accent font-black text-black text-sm tracking-tight select-none">
-            IOR
-          </div>
+          <Image src="/ior-logo.png" alt="IOR Marketing" width={36} height={36} className="rounded-xl" />
           <div>
             <p className="text-sm font-semibold text-white leading-none">IOR Marketing</p>
             <p className="text-xs text-white/40 leading-none mt-0.5">Agency OS</p>
