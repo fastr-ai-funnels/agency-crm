@@ -73,7 +73,7 @@ export function ProjectPipeline({ projects, clients }: ProjectPipelineProps) {
                   <p className="text-sm font-semibold text-white">{project.name}</p>
                   <p className="text-xs text-white/60">{project.client.companyName}</p>
                   <div className="mt-2 text-xs text-white/50">
-                    {project.tasks.length} tasks · Budget {project.budget ? `$${project.budget}` : "—"}
+                    {project.tasks.length} tasks
                   </div>
                   <p className="mt-1 text-sm text-white/70">{project.summary || "No summary provided"}</p>
                 </div>

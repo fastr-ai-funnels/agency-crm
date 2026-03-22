@@ -71,12 +71,12 @@ function TaskCard({ task }: { task: Task & { project: Project } }) {
     <div className="rounded-2xl border border-white/5 bg-white/5 p-3 text-sm text-white/80">
       <p className="font-semibold text-white">{task.title}</p>
       <p className="text-xs text-white/60">{task.project.name}</p>
-      <p className="text-xs text-white/40">Owner: {task.owner}</p>
+      <p className="text-xs text-white/40">Assignee: {task.assignee}</p>
       <p className="text-xs text-white/50">{task.notes}</p>
       <form
         action={async (formData) => {
           "use server";
-          const status = formData.get("nextStatus")?.toString() || "BACKLOG";
+          const status = formData.get("nextStatus")?.toString() || "NOT_STARTED";
           await updateTaskStatus(task.id, status);
         }}
         className="mt-3 flex gap-2"
