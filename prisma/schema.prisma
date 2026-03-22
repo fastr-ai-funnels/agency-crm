@@ -9,21 +9,26 @@ datasource db {
 }
 
 model Client {
-  id                String             @id @default(cuid())
-  companyName       String
-  owner             String
-  email             String
-  phone             String?
-  tier              String             @default("STANDARD")
-  services          String
-  monthlyRetainer   Int?
-  stage             String             @default("LEAD")
-  frameioLink       String?
-  contractUrl       String?
-  startDate         DateTime           @default(now())
-  projects          Project[]
-  deliverableGroups DeliverableGroup[]
-  createdAt         DateTime           @default(now())
+  id                   String             @id @default(cuid())
+  companyName          String
+  owner                String
+  email                String
+  phone                String?
+  tier                 String             @default("STANDARD")
+  services             String
+  monthlyRetainer      Int?
+  stage                String             @default("LEAD")
+  frameioLink          String?
+  contractUrl          String?
+  startDate            DateTime           @default(now())
+  termLength           Int                @default(12)
+  adAccountNumber      String?
+  adAccountLink        String?
+  deliverablesNeeded   String?
+  projects             Project[]
+  deliverableGroups    DeliverableGroup[]
+  tasks                Task[]             @relation("ClientTasks")
+  createdAt            DateTime           @default(now())
 }
 
 model Project {
@@ -48,8 +53,10 @@ model Task {
   dueDate     DateTime?
   notes       String?
   link        String?
-  projectId   String
-  project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String?
+  project     Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  clientId    String?
+  client      Client?      @relation("ClientTasks", fields: [clientId], references: [id], onDelete: SetNull)
   deliverable Deliverable?
   createdAt   DateTime     @default(now())
 }
@@ -71,6 +78,7 @@ model Deliverable {
   title     String
   link      String?
   completed Boolean          @default(false)
+  dueDate   DateTime?
   groupId   String
   group     DeliverableGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
   taskId    String?          @unique
@@ -98,11 +106,4 @@ model Lead {
   notes          String?
   source         String?
   createdAt      DateTime @default(now())
-}
-
-model MonthlyRevenue {
-  id        String   @id @default(cuid())
-  month     String   @unique
-  revenue   Int      @default(0)
-  createdAt DateTime @default(now())
 }

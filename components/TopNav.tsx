@@ -1,0 +1,55 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const NAV_LINKS = [
+  { href: "/clients", label: "Clients" },
+  { href: "/leads", label: "Leads" },
+  { href: "/financials", label: "Financials" },
+  { href: "/calendar", label: "Calendar" },
+];
+
+export function TopNav() {
+  const pathname = usePathname();
+
+  return (
+    <header className="sticky top-0 z-40 border-b border-white/5 bg-[#0b0c10]/90 backdrop-blur-md">
+      <div className="mx-auto max-w-6xl px-4 flex items-center justify-between h-14">
+        {/* Brand */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-accent font-black text-black text-sm tracking-tight select-none">
+            IOR
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-white leading-none">IOR Marketing</p>
+            <p className="text-xs text-white/40 leading-none mt-0.5">Agency OS</p>
+          </div>
+        </div>
+
+        {/* Nav links */}
+        <nav className="flex items-center gap-1">
+          {NAV_LINKS.map(({ href, label }) => {
+            const isActive =
+              href === "/clients"
+                ? pathname === "/clients" || pathname.startsWith("/clients/")
+                : pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-accent underline underline-offset-4 decoration-accent/60"
+                    : "text-white/50 hover:text-white"
+                }`}
+              >
+                {label}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+    </header>
+  );
+}

@@ -10,7 +10,6 @@ async function main() {
   await prisma.project.deleteMany();
   await prisma.lead.deleteMany();
   await prisma.expense.deleteMany();
-  await prisma.monthlyRevenue.deleteMany();
   await prisma.client.deleteMany();
 
   const clients = await prisma.$transaction([
@@ -24,6 +23,11 @@ async function main() {
         stage: "ACTIVE",
         services: "Meta lead gen + onsite creative",
         monthlyRetainer: 7500,
+        termLength: 12,
+        adAccountNumber: "act_1234567890",
+        adAccountLink: "https://business.facebook.com/adsmanager",
+        deliverablesNeeded: "4 video ads per month, 8 static images, monthly report",
+        startDate: addDays(new Date(), -90),
       },
     }),
     prisma.client.create({
@@ -36,6 +40,9 @@ async function main() {
         stage: "ACTIVE",
         services: "Meta + G Ads + Funnel",
         monthlyRetainer: 4800,
+        termLength: 6,
+        deliverablesNeeded: "2 video ads, landing page updates, weekly check-in",
+        startDate: addDays(new Date(), -60),
       },
     }),
     prisma.client.create({
@@ -48,6 +55,8 @@ async function main() {
         stage: "LEAD",
         services: "Offer architecture + CRO",
         monthlyRetainer: 6200,
+        termLength: 12,
+        startDate: new Date(),
       },
     }),
   ]);
@@ -96,6 +105,7 @@ async function main() {
         dueDate: addDays(new Date(), 2),
         notes: "Need Cam's approval on hooks",
         projectId: springPromo.id,
+        clientId: whiteRhino.id,
       },
     }),
     prisma.task.create({
@@ -105,6 +115,7 @@ async function main() {
         status: "NOT_STARTED",
         dueDate: addDays(new Date(), 4),
         projectId: hvac.id,
+        clientId: desertPeak.id,
       },
     }),
     prisma.task.create({
@@ -115,6 +126,7 @@ async function main() {
         dueDate: addDays(new Date(), -1),
         notes: "Ready for review",
         projectId: soho.id,
+        clientId: sohoSculpt.id,
       },
     }),
   ]);
@@ -147,18 +159,30 @@ async function main() {
   const currentMonth = new Date().toISOString().slice(0, 7);
   await prisma.$transaction([
     prisma.expense.create({
-      data: { title: "Meta Ads Tools", amount: 97, purpose: "Ad management software", month: currentMonth },
+      data: {
+        title: "Meta Ads Tools",
+        amount: 97,
+        purpose: "Ad management software",
+        month: currentMonth,
+      },
     }),
     prisma.expense.create({
-      data: { title: "Adobe Creative Cloud", amount: 55, purpose: "Video editing + design", month: currentMonth },
+      data: {
+        title: "Adobe Creative Cloud",
+        amount: 55,
+        purpose: "Video editing + design",
+        month: currentMonth,
+      },
     }),
   ]);
-
-  await prisma.monthlyRevenue.create({
-    data: { month: currentMonth, revenue: 18500 },
-  });
 }
 
 main()
-  .then(async () => { await prisma.$disconnect(); })
-  .catch(async (error) => { console.error(error); await prisma.$disconnect(); process.exit(1); });
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (error) => {
+    console.error(error);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
