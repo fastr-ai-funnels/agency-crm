@@ -65,9 +65,11 @@ export function ClientTable({ clients }: Props) {
           <input name="email" placeholder="Email *" className="input" type="email" required />
           <input name="phone" placeholder="Phone" className="input" />
           <select name="tier" className="input">
-            <option value="STANDARD">Standard</option>
-            <option value="PERFORMANCE">Performance</option>
-            <option value="ADVISORY">Advisory</option>
+            <option value="FULL_SYSTEM">Full System</option>
+            <option value="AI_AGENT_AUTOMATIONS">AI Agent + Automations</option>
+            <option value="AI_AGENT_ONLY">AI Agent Only</option>
+            <option value="AUTOMATIONS_ONLY">Automations Only</option>
+            <option value="AI_AD_CAMPAIGN">AI Ad Campaign Only</option>
           </select>
           <select name="stage" className="input">
             <option value="LEAD">Lead</option>
@@ -284,9 +286,11 @@ export function ClientTable({ clients }: Props) {
                   defaultValue={editingClient.tier}
                   className="input"
                 >
-                  <option value="STANDARD">Standard</option>
-                  <option value="PERFORMANCE">Performance</option>
-                  <option value="ADVISORY">Advisory</option>
+                  <option value="FULL_SYSTEM">Full System</option>
+                  <option value="AI_AGENT_AUTOMATIONS">AI Agent + Automations</option>
+                  <option value="AI_AGENT_ONLY">AI Agent Only</option>
+                  <option value="AUTOMATIONS_ONLY">Automations Only</option>
+                  <option value="AI_AD_CAMPAIGN">AI Ad Campaign Only</option>
                 </select>
                 <select
                   name="stage"
@@ -359,6 +363,61 @@ export function ClientTable({ clients }: Props) {
                     name="deliverablesNeeded"
                     defaultValue={editingClient.deliverablesNeeded ?? ""}
                     placeholder="Description of outputs needed"
+                    className="input w-full resize-none h-16"
+                  />
+                </div>
+                <div className="col-span-2 border-t border-white/5 pt-3">
+                  <p className="text-xs text-white/40 uppercase tracking-widest mb-3">Technical Setup</p>
+                </div>
+                <select name="setupFeeStatus" defaultValue={(editingClient as any).setupFeeStatus ?? ""} className="input">
+                  <option value="">Setup Fee Status</option>
+                  <option value="PENDING">Pending</option>
+                  <option value="PAID">Paid</option>
+                </select>
+                <select name="retainerStatus" defaultValue={(editingClient as any).retainerStatus ?? ""} className="input">
+                  <option value="">Retainer Status</option>
+                  <option value="PENDING">Pending</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="OVERDUE">Overdue</option>
+                </select>
+                <select name="crmApiStatus" defaultValue={(editingClient as any).crmApiStatus ?? ""} className="input">
+                  <option value="">CRM API Status</option>
+                  <option value="NOT_SETUP">Not Setup</option>
+                  <option value="ACTIVE">Active</option>
+                </select>
+                <input
+                  name="twilioNumber"
+                  defaultValue={(editingClient as any).twilioNumber ?? ""}
+                  placeholder="Twilio Number"
+                  className="input"
+                />
+                <input
+                  name="elevenLabsVoiceId"
+                  defaultValue={(editingClient as any).elevenLabsVoiceId ?? ""}
+                  placeholder="ElevenLabs Voice ID"
+                  className="input"
+                />
+                <input
+                  name="n8nWorkflowId"
+                  defaultValue={(editingClient as any).n8nWorkflowId ?? ""}
+                  placeholder="N8N Workflow ID"
+                  className="input"
+                />
+                <div className="col-span-2 space-y-1">
+                  <label className="text-xs text-white/40">Go-Live Date</label>
+                  <input
+                    name="goLiveDate"
+                    type="date"
+                    defaultValue={(editingClient as any).goLiveDate ? toDateInput((editingClient as any).goLiveDate) : ""}
+                    className="input date-input w-full"
+                  />
+                </div>
+                <div className="col-span-2 space-y-1">
+                  <label className="text-xs text-white/40">Results Notes</label>
+                  <textarea
+                    name="resultsNotes"
+                    defaultValue={(editingClient as any).resultsNotes ?? ""}
+                    placeholder="Campaign results, wins, notes..."
                     className="input w-full resize-none h-16"
                   />
                 </div>

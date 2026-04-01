@@ -25,6 +25,14 @@ model Client {
   adAccountNumber      String?
   adAccountLink        String?
   deliverablesNeeded   String?
+  setupFeeStatus       String?
+  retainerStatus       String?
+  crmApiStatus         String?
+  twilioNumber         String?
+  elevenLabsVoiceId    String?
+  n8nWorkflowId        String?
+  goLiveDate           DateTime?
+  resultsNotes         String?
   projects             Project[]
   deliverableGroups    DeliverableGroup[]
   tasks                Task[]             @relation("ClientTasks")
@@ -103,7 +111,12 @@ model Lead {
   readyToInvest  Boolean?
   willingToStart Boolean?
   stage          String   @default("NEW")
-  notes          String?
-  source         String?
-  createdAt      DateTime @default(now())
+  notes               String?
+  source              String?
+  conditionalLogicTag String?
+  salesCallDate       DateTime?
+  outcome             String?
+  revenueOnClose      Int?
+  downsellPathTaken   String?
+  createdAt           DateTime @default(now())
 }

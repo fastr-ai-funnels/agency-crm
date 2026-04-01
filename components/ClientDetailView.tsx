@@ -77,6 +77,41 @@ export function ClientDetailView({ client }: { client: EnrichedClient }) {
         </div>
       </div>
 
+      {/* Setup status pills */}
+      {(client.setupFeeStatus || client.retainerStatus || client.crmApiStatus) && (
+        <div className="flex flex-wrap gap-2">
+          {client.setupFeeStatus && (
+            <span className={`rounded-full px-3 py-1 text-xs font-medium border ${
+              client.setupFeeStatus === "PAID"
+                ? "bg-green-500/20 text-green-400 border-green-500/30"
+                : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+            }`}>
+              Setup Fee: {client.setupFeeStatus}
+            </span>
+          )}
+          {client.retainerStatus && (
+            <span className={`rounded-full px-3 py-1 text-xs font-medium border ${
+              client.retainerStatus === "ACTIVE"
+                ? "bg-green-500/20 text-green-400 border-green-500/30"
+                : client.retainerStatus === "OVERDUE"
+                ? "bg-red-500/20 text-red-400 border-red-500/30"
+                : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+            }`}>
+              Retainer: {client.retainerStatus}
+            </span>
+          )}
+          {client.crmApiStatus && (
+            <span className={`rounded-full px-3 py-1 text-xs font-medium border ${
+              client.crmApiStatus === "ACTIVE"
+                ? "bg-green-500/20 text-green-400 border-green-500/30"
+                : "bg-white/10 text-white/50 border-white/10"
+            }`}>
+              CRM API: {client.crmApiStatus}
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Two-column grid */}
       <div className="grid gap-6 md:grid-cols-2">
         {/* LEFT: Key Info */}
@@ -114,7 +149,10 @@ export function ClientDetailView({ client }: { client: EnrichedClient }) {
               </span>
             }
           />
-          <InfoRow label="Tier" value={client.tier} />
+          <InfoRow
+            label="Tier"
+            value={client.tier.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+          />
           {client.adAccountNumber && (
             <InfoRow label="Ad Account #" value={client.adAccountNumber} />
           )}
@@ -173,6 +211,20 @@ export function ClientDetailView({ client }: { client: EnrichedClient }) {
           />
         </div>
       </div>
+
+      {/* Technical Setup */}
+      {(client.twilioNumber || client.elevenLabsVoiceId || client.n8nWorkflowId || client.goLiveDate || client.resultsNotes) && (
+        <div className="rounded-3xl border border-white/5 bg-slate/60 p-5 space-y-0">
+          <p className="text-xs uppercase tracking-[0.25em] text-white/40 mb-3">
+            Technical Setup
+          </p>
+          {client.twilioNumber && <InfoRow label="Twilio Number" value={client.twilioNumber} />}
+          {client.elevenLabsVoiceId && <InfoRow label="11Labs Voice ID" value={client.elevenLabsVoiceId} />}
+          {client.n8nWorkflowId && <InfoRow label="N8N Workflow ID" value={client.n8nWorkflowId} />}
+          {client.goLiveDate && <InfoRow label="Go-Live Date" value={fmtDate(client.goLiveDate)} />}
+          {client.resultsNotes && <InfoRow label="Results Notes" value={client.resultsNotes} />}
+        </div>
+      )}
 
       {/* Tasks section */}
       {client.tasks.length > 0 && (

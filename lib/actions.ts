@@ -52,6 +52,14 @@ export async function createClient(formData: FormData) {
       adAccountNumber: formData.get("adAccountNumber")?.toString().trim() || null,
       adAccountLink: formData.get("adAccountLink")?.toString().trim() || null,
       deliverablesNeeded: formData.get("deliverablesNeeded")?.toString().trim() || null,
+      setupFeeStatus: formData.get("setupFeeStatus")?.toString() || null,
+      retainerStatus: formData.get("retainerStatus")?.toString() || null,
+      crmApiStatus: formData.get("crmApiStatus")?.toString() || null,
+      twilioNumber: formData.get("twilioNumber")?.toString().trim() || null,
+      elevenLabsVoiceId: formData.get("elevenLabsVoiceId")?.toString().trim() || null,
+      n8nWorkflowId: formData.get("n8nWorkflowId")?.toString().trim() || null,
+      goLiveDate: safeDate(formData.get("goLiveDate")),
+      resultsNotes: formData.get("resultsNotes")?.toString().trim() || null,
     },
   });
   revalidateAll();
@@ -81,6 +89,14 @@ export async function updateClient(id: string, formData: FormData) {
       adAccountNumber: formData.get("adAccountNumber")?.toString().trim() || null,
       adAccountLink: formData.get("adAccountLink")?.toString().trim() || null,
       deliverablesNeeded: formData.get("deliverablesNeeded")?.toString().trim() || null,
+      setupFeeStatus: formData.get("setupFeeStatus")?.toString() || null,
+      retainerStatus: formData.get("retainerStatus")?.toString() || null,
+      crmApiStatus: formData.get("crmApiStatus")?.toString() || null,
+      twilioNumber: formData.get("twilioNumber")?.toString().trim() || null,
+      elevenLabsVoiceId: formData.get("elevenLabsVoiceId")?.toString().trim() || null,
+      n8nWorkflowId: formData.get("n8nWorkflowId")?.toString().trim() || null,
+      goLiveDate: safeDate(formData.get("goLiveDate")),
+      resultsNotes: formData.get("resultsNotes")?.toString().trim() || null,
     },
   });
   revalidateAll();
@@ -243,6 +259,11 @@ export async function createLead(formData: FormData) {
       stage: formData.get("stage")?.toString() || "NEW",
       notes: formData.get("notes")?.toString().trim() || null,
       source: formData.get("source")?.toString().trim() || null,
+      conditionalLogicTag: formData.get("conditionalLogicTag")?.toString().trim() || null,
+      salesCallDate: safeDate(formData.get("salesCallDate")),
+      outcome: formData.get("outcome")?.toString() || null,
+      revenueOnClose: safeNumber(formData.get("revenueOnClose")),
+      downsellPathTaken: formData.get("downsellPathTaken")?.toString() || null,
     },
   });
   revalidateAll();
@@ -266,6 +287,11 @@ export async function updateLead(id: string, formData: FormData) {
       stage: formData.get("stage")?.toString() || "NEW",
       notes: formData.get("notes")?.toString().trim() || null,
       source: formData.get("source")?.toString().trim() || null,
+      conditionalLogicTag: formData.get("conditionalLogicTag")?.toString().trim() || null,
+      salesCallDate: safeDate(formData.get("salesCallDate")),
+      outcome: formData.get("outcome")?.toString() || null,
+      revenueOnClose: safeNumber(formData.get("revenueOnClose")),
+      downsellPathTaken: formData.get("downsellPathTaken")?.toString() || null,
     },
   });
   revalidateAll();

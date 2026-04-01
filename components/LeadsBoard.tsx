@@ -7,8 +7,11 @@ import { Pencil, Trash2, Phone } from "lucide-react";
 
 const STAGES = [
   { key: "NEW", label: "New Lead" },
-  { key: "QUALIFIED", label: "Qualified" },
-  { key: "CONVERTED", label: "Converted" },
+  { key: "CALL_SCHEDULED", label: "Call Scheduled" },
+  { key: "NO_SHOW", label: "No Show" },
+  { key: "FOLLOW_UP", label: "Follow Up" },
+  { key: "CLOSED", label: "Closed" },
+  { key: "NOT_QUALIFIED", label: "Not Qualified" },
 ];
 
 type Props = { leads: Lead[] };
@@ -18,7 +21,7 @@ export function LeadsBoard({ leads }: Props) {
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const convertedCount = leads.filter((l) => l.stage === "CONVERTED").length;
+  const convertedCount = leads.filter((l) => l.stage === "CLOSED").length;
   const estCPL = leads.length > 0 ? (1410 / leads.length).toFixed(0) : "—";
 
   return (
@@ -76,7 +79,7 @@ export function LeadsBoard({ leads }: Props) {
       </div>
 
       {/* Kanban */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
         {STAGES.map(({ key, label }) => {
           const stageLeads = leads.filter((l) => l.stage === key);
           return (
@@ -143,6 +146,29 @@ export function LeadsBoard({ leads }: Props) {
                 <option value="referral">Referral</option>
                 <option value="organic">Organic</option>
               </select>
+              <input name="conditionalLogicTag" defaultValue={(editingLead as any).conditionalLogicTag ?? ""} placeholder="Conditional Logic Tag (e.g. HVAC)" className="input w-full" />
+              <div className="space-y-1">
+                <label className="text-xs text-white/40">Sales Call Date</label>
+                <input name="salesCallDate" type="date" defaultValue={(editingLead as any).salesCallDate ? new Date((editingLead as any).salesCallDate).toISOString().split("T")[0] : ""} className="input w-full" />
+              </div>
+              <select name="outcome" defaultValue={(editingLead as any).outcome ?? ""} className="input w-full">
+                <option value="">Outcome</option>
+                <option value="CLOSED_FULL_SYSTEM">Closed — Full System</option>
+                <option value="CLOSED_AI_AGENT_AUTOMATIONS">Closed — AI Agent + Auto</option>
+                <option value="CLOSED_AI_AGENT_ONLY">Closed — AI Agent Only</option>
+                <option value="CLOSED_AUTOMATIONS_ONLY">Closed — Automations Only</option>
+                <option value="CLOSED_AI_AD_CAMPAIGN">Closed — AI Ad Campaign</option>
+                <option value="LOST">Lost</option>
+                <option value="NO_SHOW">No Show</option>
+              </select>
+              <select name="downsellPathTaken" defaultValue={(editingLead as any).downsellPathTaken ?? ""} className="input w-full">
+                <option value="">Downsell Path</option>
+                <option value="NONE">None (accepted full offer)</option>
+                <option value="TESTIMONIAL">Testimonial exchange</option>
+                <option value="REFERRAL">Referral exchange</option>
+                <option value="CASE_STUDY">Case study exchange</option>
+              </select>
+              <input name="revenueOnClose" type="number" defaultValue={(editingLead as any).revenueOnClose ?? ""} placeholder="Revenue on close ($)" className="input w-full" />
               <textarea name="notes" defaultValue={editingLead.notes ?? ""} placeholder="Notes" className="input w-full h-20 resize-none" />
               <div className="flex gap-2">
                 <button type="submit" disabled={isPending} className="flex-1 rounded-full bg-accent py-2 text-sm font-semibold text-black hover:bg-white disabled:opacity-40 active:scale-95">Save</button>
@@ -196,6 +222,14 @@ function LeadCard({
         )}
         {lead.source && <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-white/40">{lead.source}</span>}
       </div>
+      {(lead as any).outcome && (
+        <span className="rounded-full bg-accent/20 text-accent px-2 py-0.5 text-xs">
+          {(lead as any).outcome.replace(/_/g, " ").replace(/\bCLOSED\b/, "✓")}
+        </span>
+      )}
+      {(lead as any).revenueOnClose && (
+        <p className="text-xs text-green-400 font-medium">${((lead as any).revenueOnClose as number).toLocaleString()}</p>
+      )}
       {lead.notes && <p className="text-xs text-white/40 line-clamp-2">{lead.notes}</p>}
       <select value={lead.stage} onChange={(e) => onStageChange(e.target.value)} className="input text-xs w-full mt-1">
         {STAGES.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
