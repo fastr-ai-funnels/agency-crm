@@ -72,10 +72,10 @@ export function LeadsBoard({ leads }: Props) {
 
       {/* Ad spend metrics */}
       <div className="mb-4 rounded-2xl border border-white/5 bg-white/5 px-4 py-2 flex flex-wrap items-center gap-4 text-xs text-white/50">
-        <span>Daily spend: <strong className="text-white/70">$47</strong></span>
-        <span>Monthly: <strong className="text-white/70">~$1,410</strong></span>
-        <span>Est. CPL: <strong className="text-accent">${estCPL}</strong></span>
-        <span>Converted: <strong className="text-accent">{convertedCount}</strong></span>
+        <span>Daily spend: <strong className="text-white/70 mono-data">$47</strong></span>
+        <span>Monthly: <strong className="text-white/70 mono-data">~$1,410</strong></span>
+        <span>Est. CPL: <strong className="text-accent mono-data">${estCPL}</strong></span>
+        <span>Converted: <strong className="text-accent mono-data">{convertedCount}</strong></span>
       </div>
 
       {/* Kanban */}
@@ -85,7 +85,7 @@ export function LeadsBoard({ leads }: Props) {
           return (
             <div key={key} className="rounded-2xl border border-white/5 bg-black/30 p-3">
               <div className="flex items-center gap-2 mb-3">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/60">{label}</p>
+                <p className="text-[10px] uppercase tracking-[0.08em] font-medium text-white/50">{label}</p>
                 <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-white/60">{stageLeads.length}</span>
               </div>
               {stageLeads.length === 0 && <p className="text-sm text-white/30">No leads</p>}
@@ -228,7 +228,7 @@ function LeadCard({
         </span>
       )}
       {(lead as any).revenueOnClose && (
-        <p className="text-xs text-green-400 font-medium">${((lead as any).revenueOnClose as number).toLocaleString()}</p>
+        <p className="text-xs text-green-400 font-medium mono-data">${((lead as any).revenueOnClose as number).toLocaleString()}</p>
       )}
       {lead.notes && <p className="text-xs text-white/40 line-clamp-2">{lead.notes}</p>}
       <select value={lead.stage} onChange={(e) => onStageChange(e.target.value)} className="input text-xs w-full mt-1">

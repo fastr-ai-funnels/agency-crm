@@ -39,8 +39,8 @@ export function TopNav() {
                 href={href}
                 className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   isActive
-                    ? "text-accent underline underline-offset-4 decoration-accent/60"
-                    : "text-white/50 hover:text-white"
+                    ? "bg-accent/10 text-accent"
+                    : "text-white/50 hover:text-white hover:bg-white/5"
                 }`}
               >
                 {label}

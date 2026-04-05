@@ -126,7 +126,7 @@ export function ClientTable({ clients }: Props) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/5 text-left text-xs uppercase tracking-[0.2em] text-white/40">
+            <tr className="border-b border-white/5 text-left text-[10px] uppercase tracking-[0.08em] text-white/40 font-medium">
               <th className="pb-3 pr-4">Company</th>
               <th className="pb-3 pr-4">Owner</th>
               <th className="pb-3 pr-4">Stage</th>
@@ -139,7 +139,7 @@ export function ClientTable({ clients }: Props) {
           </thead>
           <tbody className="divide-y divide-white/5">
             {clients.map((client) => (
-              <tr key={client.id}>
+              <tr key={client.id} className="hover:bg-white/[0.025] transition-colors duration-100">
                 <td className="py-3 pr-4">
                   <Link
                     href={`/clients/${client.id}`}
@@ -185,12 +185,12 @@ export function ClientTable({ clients }: Props) {
                 <td className="py-3 pr-4 text-white/60 max-w-[160px] truncate">
                   {client.services}
                 </td>
-                <td className="py-3 pr-4 text-white font-medium">
+                <td className="py-3 pr-4 text-white font-semibold mono-data">
                   {client.monthlyRetainer
                     ? `$${client.monthlyRetainer.toLocaleString()}`
                     : "—"}
                 </td>
-                <td className="py-3 pr-4 text-white/40 text-xs whitespace-nowrap">
+                <td className="py-3 pr-4 text-white/40 text-xs whitespace-nowrap mono-data">
                   {fmtDate(client.startDate)}
                 </td>
                 <td className="py-3">
