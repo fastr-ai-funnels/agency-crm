@@ -41,11 +41,11 @@ export function ClientTable({ clients }: Props) {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <div className="rounded-3xl border border-white/5 bg-slate/50 p-6 shadow-xl shadow-black/30">
+    <div className="glass p-6">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-lg font-semibold">Clients</h2>
-          <p className="text-sm text-white/60">
+          <h2 className="text-lg font-bold tracking-tight">Clients</h2>
+          <p className="text-sm text-white/40 mt-0.5">
             {clients.filter((c) => c.stage === "ACTIVE").length} active ·{" "}
             {clients.length} total
           </p>
@@ -137,9 +137,9 @@ export function ClientTable({ clients }: Props) {
               <th className="pb-3">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-white/[0.04]">
             {clients.map((client) => (
-              <tr key={client.id} className="hover:bg-white/[0.025] transition-colors duration-100">
+              <tr key={client.id} className="table-row-hover">
                 <td className="py-3 pr-4">
                   <Link
                     href={`/clients/${client.id}`}
@@ -232,10 +232,10 @@ export function ClientTable({ clients }: Props) {
       </div>
 
       {editingClient && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="w-full max-w-xl rounded-3xl border border-white/10 bg-slate p-6 space-y-4 my-8">
+        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto">
+          <div className="glass-modal w-full max-w-xl p-6 space-y-4 my-8">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold">Edit Client</h3>
+              <h3 className="font-bold tracking-tight">Edit Client</h3>
               <button
                 onClick={() => setEditingClient(null)}
                 className="text-white/40 hover:text-white text-2xl leading-none"

@@ -67,30 +67,21 @@ export function FinancialDashboard({ clients, expenses }: Props) {
       {/* Summary cards */}
       <div className="grid gap-4 md:grid-cols-3">
         {summaryCards.map((card) => (
-          <div
-            key={card.label}
-            className="rounded-2xl bg-slate/40 p-5 shadow-lg shadow-black/40 border border-white/5 border-t-[3px] border-t-accent/70"
-          >
-            <p className="text-[11px] uppercase tracking-[0.08em] text-white/50 font-medium">
-              {card.label}
-            </p>
-            <p
-              className={`mt-3 text-3xl font-bold mono-data ${
-                card.loss ? "text-red-400" : "text-white"
-              }`}
-            >
+          <div key={card.label} className="glass card-accent p-5">
+            <p className="heading-xs">{card.label}</p>
+            <p className={`mt-3 text-[2rem] font-extrabold mono-data tracking-tight leading-none ${card.loss ? "text-red-400" : "text-white"}`}>
               {card.value}
             </p>
-            <p className="mt-1 text-xs text-white/50">{card.sub}</p>
+            <p className="mt-2 text-xs text-white/40">{card.sub}</p>
           </div>
         ))}
       </div>
 
       {/* Bar chart */}
-      <div className="rounded-3xl border border-white/5 bg-slate/60 p-6 shadow-xl shadow-black/30">
+      <div className="glass p-6">
         <div className="mb-4">
-          <h2 className="text-lg font-semibold">Last 6 Months</h2>
-          <p className="text-sm text-white/60">
+          <h2 className="text-lg font-bold tracking-tight">Last 6 Months</h2>
+          <p className="text-sm text-white/40 mt-0.5">
             Revenue auto-derived from active client retainers
           </p>
         </div>
@@ -117,10 +108,12 @@ export function FinancialDashboard({ clients, expenses }: Props) {
                 />
                 <Tooltip
                   contentStyle={{
-                    background: "#1C1F26",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: 12,
+                    background: "rgba(12,14,22,0.90)",
+                    backdropFilter: "blur(20px)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: 14,
                     color: "#fff",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
                   }}
                   formatter={(value: number) => [
                     `$${value.toLocaleString()}`,

@@ -25,11 +25,11 @@ export function LeadsBoard({ leads }: Props) {
   const estCPL = leads.length > 0 ? (1410 / leads.length).toFixed(0) : "—";
 
   return (
-    <div className="rounded-3xl border border-white/5 bg-slate/60 p-6">
+    <div className="glass p-6">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-lg font-semibold">Leads</h2>
-          <p className="text-sm text-white/60">{convertedCount} converted · {leads.length} total</p>
+          <h2 className="text-lg font-bold tracking-tight">Leads</h2>
+          <p className="text-sm text-white/40 mt-0.5">{convertedCount} converted · {leads.length} total</p>
         </div>
       </div>
 
@@ -83,10 +83,10 @@ export function LeadsBoard({ leads }: Props) {
         {STAGES.map(({ key, label }) => {
           const stageLeads = leads.filter((l) => l.stage === key);
           return (
-            <div key={key} className="rounded-2xl border border-white/5 bg-black/30 p-3">
+            <div key={key} className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-3" style={{backdropFilter:"blur(8px)"}}>
               <div className="flex items-center gap-2 mb-3">
-                <p className="text-[10px] uppercase tracking-[0.08em] font-medium text-white/50">{label}</p>
-                <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-white/60">{stageLeads.length}</span>
+                <p className="heading-xs">{label}</p>
+                <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-white/50 tabular-nums">{stageLeads.length}</span>
               </div>
               {stageLeads.length === 0 && <p className="text-sm text-white/30">No leads</p>}
               <div className="space-y-3">
@@ -108,10 +108,10 @@ export function LeadsBoard({ leads }: Props) {
 
       {/* Edit modal */}
       {editingLead && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-3xl border border-white/10 bg-slate p-6 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
+          <div className="glass-modal w-full max-w-md p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold">Edit Lead</h3>
+              <h3 className="font-bold tracking-tight">Edit Lead</h3>
               <button onClick={() => setEditingLead(null)} className="text-white/40 hover:text-white text-2xl leading-none">×</button>
             </div>
             <form
@@ -192,7 +192,7 @@ function LeadCard({
   isPending: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-white/5 bg-white/5 p-3 text-sm space-y-2 hover:border-white/10 hover:bg-white/[0.08] transition-colors duration-150">
+    <div className="rounded-2xl border border-white/[0.07] bg-white/[0.04] p-3 text-sm space-y-2 hover:border-white/[0.12] hover:bg-white/[0.07] transition-all duration-200" style={{backdropFilter:"blur(8px)"}}>
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="font-semibold text-white">{lead.name}</p>
