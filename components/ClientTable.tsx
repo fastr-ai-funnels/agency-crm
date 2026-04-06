@@ -41,7 +41,7 @@ export function ClientTable({ clients }: Props) {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <div className="rounded-3xl border border-white/5 bg-slate/60 p-6">
+    <div className="rounded-3xl border border-white/5 bg-slate/50 p-6 shadow-xl shadow-black/30">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div>
           <h2 className="text-lg font-semibold">Clients</h2>

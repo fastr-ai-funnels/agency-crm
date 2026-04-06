@@ -87,7 +87,7 @@ export function FinancialDashboard({ clients, expenses }: Props) {
       </div>
 
       {/* Bar chart */}
-      <div className="rounded-3xl border border-white/5 bg-slate/60 p-6">
+      <div className="rounded-3xl border border-white/5 bg-slate/60 p-6 shadow-xl shadow-black/30">
         <div className="mb-4">
           <h2 className="text-lg font-semibold">Last 6 Months</h2>
           <p className="text-sm text-white/60">

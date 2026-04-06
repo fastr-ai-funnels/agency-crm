@@ -12,7 +12,7 @@ export default async function ClientsPage() {
   });
 
   return (
-    <main className="pt-6">
+    <main className="pt-6 fade-up">
       <ClientTable clients={clients} />
     </main>
   );

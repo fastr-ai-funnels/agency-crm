@@ -192,7 +192,7 @@ function LeadCard({
   isPending: boolean;
 }) {
   return (
-    <div className="rounded-2xl border border-white/5 bg-white/5 p-3 text-sm space-y-2">
+    <div className="rounded-2xl border border-white/5 bg-white/5 p-3 text-sm space-y-2 hover:border-white/10 hover:bg-white/[0.08] transition-colors duration-150">
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="font-semibold text-white">{lead.name}</p>

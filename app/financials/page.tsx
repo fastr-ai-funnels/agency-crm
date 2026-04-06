@@ -10,7 +10,7 @@ export default async function FinancialsPage() {
   ]);
 
   return (
-    <main className="pt-6">
+    <main className="pt-6 fade-up">
       <FinancialDashboard clients={clients} expenses={expenses} />
     </main>
   );
